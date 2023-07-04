@@ -21,6 +21,12 @@ while [ $counter -lt $MAX_CHECKS ]; do
     --dimensions Name=InstanceId,Value="$INSTANCE_ID" \
     --output json | jq -r '.Datapoints[].Average')
 
+  # Check if CPU_UTILIZATION is empty or contains no values
+  if [ -z "$CPU_UTILIZATION" ]; then
+    echo "Error: No CPU utilization data found."
+    continue
+  fi
+
   # Print the CPU utilization
   echo "CPU Utilization: $CPU_UTILIZATION%"
 
